@@ -41,7 +41,7 @@
     <property name="java.vm.specification.version" value="1.7"/>
     <property name="sun.arch.data.model" value="64"/>
     <property name="java.home" value="/usr/lib/jvm/java-7-openjdk-amd64/jre"/>
-    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher clean test sonar:sonar"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher test"/>
     <property name="java.specification.vendor" value="Oracle Corporation"/>
     <property name="user.language" value="en"/>
     <property name="awt.toolkit" value="sun.awt.X11.XToolkit"/>
@@ -60,6 +60,6 @@
     <property name="sun.cpu.isalist" value=""/>
   </properties>
   <testcase time="0" classname="com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus.OstoksenLisaysKoriinTest" name="koriSisaltaaLisatynTuotteen"/>
-  <testcase time="0.001" classname="com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus.OstoksenLisaysKoriinTest" name="tuotteenMaaraVahentyy"/>
+  <testcase time="0" classname="com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus.OstoksenLisaysKoriinTest" name="tuotteenMaaraVahentyy"/>
   <testcase time="0" classname="com.mycompany.ohmawebkauppa.sovelluslogiikka.ohjaus.OstoksenLisaysKoriinTest" name="josTuotteenVarastosaldoNollaEiTuotettaLaitetaOstoskoriin"/>
 </testsuite>

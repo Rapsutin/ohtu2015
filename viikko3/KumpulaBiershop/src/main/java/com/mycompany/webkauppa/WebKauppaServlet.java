@@ -15,9 +15,11 @@ public abstract class WebKauppaServlet extends HttpServlet {
 
     protected HttpSession sessio;
     protected Varasto varasto;
+    protected KomentoTehdas komennot;
 
     public WebKauppaServlet() {
         varasto = Varasto.getInstance();
+        komennot = new KomentoTehdas();
     }        
     
     public void naytaSivu(String url, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
