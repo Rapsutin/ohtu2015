@@ -2,8 +2,6 @@
 package ohtu.intjoukkosovellus;
 
 import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 
 public class IntJoukkuYksiparametrisellaKonstruktorillaTest extends IntJoukkoTest {
@@ -11,7 +9,7 @@ public class IntJoukkuYksiparametrisellaKonstruktorillaTest extends IntJoukkoTes
     @Before
     @Override
     public void setUp() {
-        joukko = new IntJoukko(3);
+        joukko = new IntJoukko();
         joukko.lisaa(10);
         joukko.lisaa(3);
     }

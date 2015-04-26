@@ -2,11 +2,9 @@ package ohtu;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import javax.swing.JFrame;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;

@@ -2,79 +2,73 @@ package ohtu;
 
 public class TennisGame {
     
-    private int m_score1 = 0;
-    private int m_score2 = 0;
-    private String player1Name;
-    private String player2Name;
+    private Player player1;
+    private Player player2;
+    boolean hasDeuced;
 
     public TennisGame(String player1Name, String player2Name) {
-        this.player1Name = player1Name;
-        this.player2Name = player2Name;
+        player1 = new Player(player1Name);
+        player2 = new Player(player2Name);
+        hasDeuced = false;
     }
 
-    public void wonPoint(String playerName) {
-        if (playerName == "player1")
-            m_score1 += 1;
-        else
-            m_score2 += 1;
+    public Player getPlayer1() {
+        return player1;
     }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+    
+    public void wonPoint(Player player) {
+        player.wonPoint();
+        if(player1.hasAdvantage() && player1.hasAdvantage()) {
+            player1.setScore(Score.FORTY);
+            player2.setScore(Score.FORTY);
+            hasDeuced = true;
+        }
+    } 
 
     public String getScore() {
-        String score = "";
-        int tempScore=0;
-        if (m_score1==m_score2)
-        {
-            switch (m_score1)
-            {
-                case 0:
-                        score = "Love-All";
-                    break;
-                case 1:
-                        score = "Fifteen-All";
-                    break;
-                case 2:
-                        score = "Thirty-All";
-                    break;
-                case 3:
-                        score = "Forty-All";
-                    break;
-                default:
-                        score = "Deuce";
-                    break;
-                
-            }
+        if(singlePlayerHasAdvantage()) return advantageScore();
+        if(theGameIsTied()) return returnTiedGameString();
+        if(aPlayerHasWon()) return winScore();
+        return normalScore();
+    }
+
+    private boolean singlePlayerHasAdvantage() {
+        return player1.hasAdvantage() ^ player2.hasAdvantage();
+    }
+    
+    private String advantageScore() {
+        if (player1.hasAdvantage()) {
+           return "Player1 advantage"; 
         }
-        else if (m_score1>=4 || m_score2>=4)
-        {
-            int minusResult = m_score1-m_score2;
-            if (minusResult==1) score ="Advantage player1";
-            else if (minusResult ==-1) score ="Advantage player2";
-            else if (minusResult>=2) score = "Win for player1";
-            else score ="Win for player2";
+        else {
+           return "Player2 advantage"; 
         }
-        else
-        {
-            for (int i=1; i<3; i++)
-            {
-                if (i==1) tempScore = m_score1;
-                else { score+="-"; tempScore = m_score2;}
-                switch(tempScore)
-                {
-                    case 0:
-                        score+="Love";
-                        break;
-                    case 1:
-                        score+="Fifteen";
-                        break;
-                    case 2:
-                        score+="Thirty";
-                        break;
-                    case 3:
-                        score+="Forty";
-                        break;
-                }
-            }
-        }
-        return score;
+    }
+
+    private boolean aPlayerHasWon() {
+        return player1.hasWon() || player2.hasWon();
+    }
+    
+    private String winScore() {
+        if(player1.hasWon()) return "Win for player1";
+        else return "Win for player2";
+    }
+
+    private String normalScore() {
+        return player1.getScore().getScoreName() + "-" + player2.getScore().getScoreName();
+    }
+    
+
+    private String returnTiedGameString() {
+        if(hasDeuced) return "Deuce";
+        return player1.getScore().getScoreName()+"-"+"All";
+    }
+
+    private boolean theGameIsTied() {
+        return player1.getScore() == player2.getScore();
     }
 }
