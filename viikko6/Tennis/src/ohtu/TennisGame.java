@@ -2,73 +2,81 @@ package ohtu;
 
 public class TennisGame {
     
-    private Player player1;
-    private Player player2;
-    boolean hasDeuced;
+    private static final int ADVANTAGE = 4;
+    
+    private int player1Score = 0;
+    private int player2Score = 0;
+    private String player1Name;
+    private String player2Name;
 
     public TennisGame(String player1Name, String player2Name) {
-        player1 = new Player(player1Name);
-        player2 = new Player(player2Name);
-        hasDeuced = false;
+        this.player1Name = player1Name;
+        this.player2Name = player2Name;
     }
 
-    public Player getPlayer1() {
-        return player1;
+    public void wonPoint(String playerName) {
+        if (playerName == "player1")
+            player1Score += 1;
+        else
+            player2Score += 1;
     }
-
-    public Player getPlayer2() {
-        return player2;
-    }
-    
-    public void wonPoint(Player player) {
-        player.wonPoint();
-        if(player1.hasAdvantage() && player1.hasAdvantage()) {
-            player1.setScore(Score.FORTY);
-            player2.setScore(Score.FORTY);
-            hasDeuced = true;
-        }
-    } 
 
     public String getScore() {
-        if(singlePlayerHasAdvantage()) return advantageScore();
-        if(theGameIsTied()) return returnTiedGameString();
-        if(aPlayerHasWon()) return winScore();
-        return normalScore();
+        String score = "";
+        if (playersAreTied())
+        {
+            score = tiedScore();
+        }
+        else if (GameIsDeuceOrWin())
+        {
+            score = lastScores(score);
+        }
+        else
+        {
+            score = normalScore();
+        }
+        return score;
     }
 
-    private boolean singlePlayerHasAdvantage() {
-        return player1.hasAdvantage() ^ player2.hasAdvantage();
+    private boolean playersAreTied() {
+        return player1Score==player2Score;
+    }
+
+    private boolean GameIsDeuceOrWin() {
+        return player1Score>=ADVANTAGE || player2Score>=ADVANTAGE;
+    }
+
+    private String lastScores(String score) {
+        String player = player1Score > player2Score ? "player1" : "player2";
+        String situation = Math.abs(player1Score - player2Score) == 1 ? "Advantage " : "Win for ";
+        
+        return situation + player;
     }
     
-    private String advantageScore() {
-        if (player1.hasAdvantage()) {
-           return "Player1 advantage"; 
-        }
-        else {
-           return "Player2 advantage"; 
-        }
-    }
-
-    private boolean aPlayerHasWon() {
-        return player1.hasWon() || player2.hasWon();
-    }
-    
-    private String winScore() {
-        if(player1.hasWon()) return "Win for player1";
-        else return "Win for player2";
-    }
-
     private String normalScore() {
-        return player1.getScore().getScoreName() + "-" + player2.getScore().getScoreName();
-    }
-    
-
-    private String returnTiedGameString() {
-        if(hasDeuced) return "Deuce";
-        return player1.getScore().getScoreName()+"-"+"All";
+        return getScoreName(player1Score)+"-"+getScoreName(player2Score);
     }
 
-    private boolean theGameIsTied() {
-        return player1.getScore() == player2.getScore();
+    private String getScoreName(int score) {
+        switch(score)
+        {
+            case 0:
+                return "Love";
+            case 1:
+                return "Fifteen";
+            case 2:
+                return "Thirty";
+            case 3:
+                return "Forty";
+        }
+        return null;
+    }
+
+    private String tiedScore() {
+        if(player1Score <= 3) {
+            return getScoreName(player1Score)+"-"+"All";
+        } else {
+            return "Deuce";
+        }
     }
 }
